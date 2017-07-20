@@ -17,7 +17,13 @@ SRC_PATH	= ./src/
 SRC		=	$(SRC_PATH)main.cpp \
 			$(SRC_PATH)Exception.cpp \
 			$(SRC_PATH)Parser.cpp \
-			$(SRC_PATH)Factory.cpp 
+			$(SRC_PATH)Factory.cpp \
+			$(SRC_PATH)types/Float.cpp \
+			$(SRC_PATH)types/Int8.cpp \
+			$(SRC_PATH)types/Int16.cpp \
+			$(SRC_PATH)types/Int32.cpp \
+			$(SRC_PATH)types/Double.cpp \
+			$(SRC_PATH)types/BigDecimal.cpp \
 
 OBJ					=		$(SRC:.cpp=.o)
 

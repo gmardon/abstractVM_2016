@@ -5,11 +5,12 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:06:16 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:13:34 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 3:29:06 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _OPERAND_HPP_
 #define _OPERAND_HPP_
 #include "IOperand.hpp"
+
 template <typename T>
 class 	Operand : public IOperand
 {

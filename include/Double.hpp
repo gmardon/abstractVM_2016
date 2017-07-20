@@ -5,11 +5,13 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:23 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:05:23 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 3:31:38 PM 2017 guillaume.mardon@epitech.eu
 //
 
 #ifndef _DOUBLE_HPP_
 #define _DOUBLE_HPP_
+#include "Operand.hpp"
+
 class Double : public Operand<double>
 {
 public:

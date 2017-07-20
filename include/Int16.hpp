@@ -5,11 +5,12 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:41 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:05:41 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 3:32:03 PM 2017 guillaume.mardon@epitech.eu
 //
-
 #ifndef _INT16_HPP_
 #define _INT16_HPP_
+#include "Operand.hpp"
+
 class Int16 : public Operand<int16_t>
 {
 public:

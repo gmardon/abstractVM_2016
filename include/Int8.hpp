@@ -5,11 +5,12 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:36 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:26:24 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 3:31:18 PM 2017 guillaume.mardon@epitech.eu
 //
-
 #ifndef _INT8_HPP_
 #define _INT8_HPP_
+#include "Operand.hpp"
+
 class Int8 : public Operand<int8_t>
 {
 public:
