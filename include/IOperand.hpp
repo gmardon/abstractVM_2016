@@ -5,7 +5,7 @@
 // Login   <bettin_j@epitech.net>
 // 
 // Started on  Sat Feb  9 09:32:15 2013 jordan bettin
-// Last update Fri Jul 20 2:31:38 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 2:49:29 PM 2017 guillaume.mardon@epitech.eu
 //
 
 #ifndef _IOPERAND_HPP_
@@ -21,7 +21,7 @@ typedef enum eOperandType
     INT32,
     FLOAT,
     DOUBLE,
-    BIGDECIMAL
+    BIGDECIMAL,
     UNKNOWN,
   }		eOperandType;
 

@@ -2,7 +2,11 @@
 #include <string>
 #include <map>
 #include "IOperand.hpp"
-
+#include "Int8.hpp"
+#include "Int16.hpp"
+#include "Int32.hpp"
+#include "Float.hpp"
+#include "BigDecimal.hpp"
 class Factory
 {
 public:
