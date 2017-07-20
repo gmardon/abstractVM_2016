@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:47 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:05:52 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 3:26:55 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _INT32_HPP_
 #define _INT32_HPP_
@@ -14,5 +14,10 @@ class Int32 : public Operand<int32_t>
 public:
     Int32(const std::string & value);
     ~Int32();
+
+    int getPrecision() const
+    {
+        return 0;
+    }
 };
 #endif

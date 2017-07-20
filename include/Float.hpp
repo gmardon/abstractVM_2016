@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 2:57:18 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 2:57:18 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 3:26:43 PM 2017 guillaume.mardon@epitech.eu
 //
 
 #ifndef _FLOAT_HPP_
@@ -15,5 +15,9 @@ class Float : public Operand<float>
 public:
     Float(const std::string & value);
     ~Float();
+    int getPrecision() const
+    {
+        return 7;
+    };
 };
 #endif

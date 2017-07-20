@@ -13,38 +13,38 @@ Factory::Factory()
 IOperand const* Factory::createOperand(eOperandType type, std::string const& value) const
 {
 	IOperand const* (Factory::*f)(std::string const & value) const;
-	//f = create.at(type);
+	f = operands.at(type);
 	return ((*this.*f)(value));
 }
 
 IOperand const* Factory::createInt8( std::string const & value ) const
 {
-	return (new Operand<char>(value, Int8, 0, this));
+	return (new Int8(value));
 }
 
 IOperand const* Factory::createInt16( std::string const & value ) const
 {
-	return (new Operand<short int>(value, Int16, 0, this));
+	return (new Int16(value));
 }
 
 IOperand const* Factory::createInt32( std::string const & value ) const
 {
-	return (new Operand<int>(value, Int32, 0, this));
+	return (new Int32(value));
 }
 
 IOperand const* Factory::createFloat( std::string const & value ) const
 {
-	return (new Operand<float>(value, Float, 7, this));
+	return (new Float(value));
 }
 
 IOperand const* Factory::createDouble( std::string const & value ) const
 {
-	return (new Operand<double>(value, Double, 15, this));
+	return (new Double(value));
 }
 
 IOperand const* Factory::createBigDecimal( std::string const & value ) const
 {
-	return (new Operand<long int>(value, Double, 200, this));
+	return (new BigDecimal(value));
 }
 
 Factory::~Factory()

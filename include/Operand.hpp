@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:06:16 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:06:21 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 3:13:34 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _OPERAND_HPP_
 #define _OPERAND_HPP_
@@ -13,10 +13,6 @@
 template <typename T>
 class 	Operand : public IOperand
 {
-    protected:
-    eOperandType	_type;
-    std::string 	_str;
-
     public:
         virtual std::string const & toString() const;
 
@@ -31,5 +27,9 @@ class 	Operand : public IOperand
 
         Operand(eOperandType type, const std::string & value);
         virtual ~Operand();
+
+    protected:
+        eOperandType _type;
+        std::string _str;
 };
 #endif
