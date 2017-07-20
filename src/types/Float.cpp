@@ -1,4 +1,4 @@
-#include	"Float.hh"
+#include "Float.hpp"
 
 AbstractVM::Operand::Float::Float(const std::string & value) :
   Operand(FLOAT, value)
