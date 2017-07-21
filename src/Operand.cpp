@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 4:22:58 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 9:31:35 AM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 9:56:38 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "Operand.hpp"
 
@@ -27,9 +27,17 @@ std::string const & Operand<T>::toString( void ) const {
 	return this->value;
 }
 
-template<typename T> 
-IOperand const * Operand<T>::operator+( IOperand const & rhs ) const {
-	if (this->getPrecision() < rhs.getPrecision()) 
+template<typename T>
+IOperand * Operand<T>::operator+( IOperand const & rhs ) const {
+	/*if (this->getPrecision() < rhs.getPrecision()) 
 		return (rhs + *this);
-	return ret_val;
+	return ret_val;*/
+	return NULL;
 }
+
+template Operand<int8_t>::Operand(eOperandType type, const std::string & value);
+template Operand<int16_t>::Operand(eOperandType type, const std::string & value);
+template Operand<int32_t>::Operand(eOperandType type, const std::string & value);
+template Operand<int64_t>::Operand(eOperandType type, const std::string & value);
+template Operand<float>::Operand(eOperandType type, const std::string & value);
+template Operand<double>::Operand(eOperandType type, const std::string & value);
