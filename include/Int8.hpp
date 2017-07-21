@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:36 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 5:55:33 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 10:02:48 AM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _INT8_HPP_
 #define _INT8_HPP_
