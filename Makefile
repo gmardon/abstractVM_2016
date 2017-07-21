@@ -24,6 +24,7 @@ SRC		=	$(SRC_PATH)main.cpp \
 			$(SRC_PATH)types/Int32.cpp \
 			$(SRC_PATH)types/Double.cpp \
 			$(SRC_PATH)types/BigDecimal.cpp \
+			$(SRC_PATH)Operand.cpp \
 
 OBJ					=		$(SRC:.cpp=.o)
 

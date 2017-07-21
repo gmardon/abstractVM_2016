@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:47 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:31:26 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 5:14:48 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _INT32_HPP_
 #define _INT32_HPP_
@@ -20,6 +20,11 @@ public:
     int getPrecision() const
     {
         return 0;
+    }
+
+    eOperandType getType() const
+    {
+        return INT32;
     }
 };
 #endif

@@ -5,14 +5,14 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:06:16 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:29:06 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 6:12:42 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _OPERAND_HPP_
 #define _OPERAND_HPP_
 #include "IOperand.hpp"
 
 template <typename T>
-class 	Operand : public IOperand
+class Operand : public IOperand
 {
     public:
         virtual std::string const & toString() const;
@@ -21,16 +21,16 @@ class 	Operand : public IOperand
         virtual eOperandType getType() const;
 
         virtual IOperand * operator+(const IOperand &rhs) const;
-        virtual IOperand * operator-(const IOperand &rhs) const;
+      /*  virtual IOperand * operator-(const IOperand &rhs) const;
         virtual IOperand * operator*(const IOperand &rhs) const;
         virtual IOperand * operator/(const IOperand &rhs) const;
-        virtual IOperand * operator%(const IOperand &rhs) const;
+        virtual IOperand * operator%(const IOperand &rhs) const;*/
 
         Operand(eOperandType type, const std::string & value);
-        virtual ~Operand();
+        ~Operand();
 
     protected:
-        eOperandType _type;
-        std::string _str;
+        std::string value;
+        eOperandType type;
 };
 #endif

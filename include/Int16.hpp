@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:41 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:32:03 PM 2017 guillaume.mardon@epitech.eu
+// Last update Fri Jul 20 5:18:35 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _INT16_HPP_
 #define _INT16_HPP_
@@ -16,5 +16,15 @@ class Int16 : public Operand<int16_t>
 public:
     Int16(const std::string & value);
     ~Int16();
+
+    int getPrecision() const
+    {
+        return 0;
+    }
+
+    eOperandType getType() const
+    {
+        return INT16;
+    }
 };
 #endif
