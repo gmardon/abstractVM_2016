@@ -5,9 +5,10 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 4:22:58 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 11:21:36 AM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 1:41:33 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "Operand.hpp"
+#include "Factory.hpp"
 
 template <typename T>
 Operand<T>::Operand(eOperandType type, const std::string &value)
@@ -28,11 +29,39 @@ std::string const &Operand<T>::toString(void) const
 }
 
 template <typename T>
-IOperand *Operand<T>::operator+(IOperand const &rhs) const
+IOperand const *Operand<T>::operator+(IOperand const &target) const
 {
-	if (this->getPrecision() < rhs.getPrecision()) 
-		return (rhs + *this);
-	T lhs_value = static_cast<T>(stod(this->value));
-	T rhs_value = static_cast<T>(stod(rhs.toString()));
+	if (this->getPrecision() < target.getPrecision()) 
+		return (target + *this);
+	T source_value = static_cast<T>(stod(this->value));
+	T target_value = static_cast<T>(stod(target.toString()));
+	// check overflow before anything
+	Factory *factory = new Factory();
+	const IOperand *operand = factory->createOperand(this->getType(), std::to_string(target_value + source_value));
+	delete factory;
+	return operand;
+}
+
+template <typename T>
+IOperand const *Operand<T>::operator-(IOperand const &target) const
+{
+	return NULL;
+}
+
+template <typename T>
+IOperand const *Operand<T>::operator*(IOperand const &target) const
+{
+	return NULL;
+}
+
+template <typename T>
+IOperand const *Operand<T>::operator/(IOperand const &target) const
+{
+	return NULL;
+}
+
+template <typename T>
+IOperand const *Operand<T>::operator%(IOperand const &target) const
+{
 	return NULL;
 }
