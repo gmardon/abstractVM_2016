@@ -16,7 +16,6 @@ ECHO				=		/bin/echo -e
 SRC_PATH	= ./src/
 SRC		=	$(SRC_PATH)main.cpp \
 			$(SRC_PATH)Exception.cpp \
-			$(SRC_PATH)Parser.cpp \
 			$(SRC_PATH)Factory.cpp \
 			$(SRC_PATH)types/Float.cpp \
 			$(SRC_PATH)types/Int8.cpp \

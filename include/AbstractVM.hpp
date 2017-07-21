@@ -5,10 +5,12 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 2:57:48 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 2:57:56 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 3:20:37 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _ABSTRACT_VM_HPP_
 #define _ABSTRACT_VM_HPP_
 #include <iostream>
-
+#include <stack>
+#include <map>
+#include <fstream>
 #endif

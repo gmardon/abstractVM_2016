@@ -5,14 +5,27 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:49:39 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 1:51:13 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 3:50:07 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _VIRTUAL_MACHINE_HPP_
 #define _VIRTUAL_MACHINE_HPP_
+#include "Operand.hpp"
+#include "AbstractVM.hpp"
+#include "Exception.hpp"
+
 class VirtualMachine 
 {
     public:
         VirtualMachine();
         ~VirtualMachine();
+        void fromFile(std::string file);
+        
+    private:
+        void processInstruction(std::string instruction, IOperand *operand);
+
+        std::stack<IOperand *> stack;
+        std::map<std::string, void (VirtualMachine::*)()> handlers;
+
+        void exit();
 };
 #endif

@@ -5,9 +5,8 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:23 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 11:11:05 AM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 3:46:15 PM 2017 guillaume.mardon@epitech.eu
 //
-
 #ifndef _DOUBLE_HPP_
 #define _DOUBLE_HPP_
 #include "Operand.hpp"

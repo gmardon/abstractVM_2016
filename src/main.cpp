@@ -5,12 +5,13 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:52:09 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 1:52:14 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 3:36:23 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "AbstractVM.hpp"
-#include "Parser.hpp"
+#include "VirtualMachine.hpp"
 
 int main(int argc, char *argv[])
 {
-    parseFile("example.avm");
+    VirtualMachine *vm = new VirtualMachine();
+    vm->fromFile("example.avm");
 }
