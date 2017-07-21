@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:06:16 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 1:40:12 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 1:43:53 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _OPERAND_HPP_
 #define _OPERAND_HPP_
@@ -20,11 +20,11 @@ class Operand : public IOperand
         virtual int getPrecision() const;
         virtual eOperandType getType() const;
 
-        IOperand const * operator+(const IOperand &rhs) const;
-        IOperand const * operator-(const IOperand &rhs) const;
-        IOperand const * operator*(const IOperand &rhs) const;
-        IOperand const * operator/(const IOperand &rhs) const;
-        IOperand const * operator%(const IOperand &rhs) const;
+        IOperand const * operator+(const IOperand &target) const;
+        IOperand const * operator-(const IOperand &target) const;
+        IOperand const * operator*(const IOperand &target) const;
+        IOperand const * operator/(const IOperand &target) const;
+        IOperand const * operator%(const IOperand &target) const;
 
         Operand(eOperandType type, const std::string & value);
         ~Operand();
