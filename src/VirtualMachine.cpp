@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 7:34:12 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 8:17:11 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -14,6 +14,8 @@ VirtualMachine::VirtualMachine()
     this->handlers["exit"] = &VirtualMachine::exit;
     this->handlers["add"] = &VirtualMachine::add;
     this->handlers["push"] = &VirtualMachine::push;
+    this->handlers["pop"] = &VirtualMachine::pop;
+    this->handlers["mul"] = &VirtualMachine::mul;
 }
 
 void VirtualMachine::fromFile(std::string filename)
@@ -79,14 +81,41 @@ void VirtualMachine::add(IOperand const *operand)
     IOperand const *first;
     IOperand const *second;
 
-    op1 = stack.top();
+    first = stack.top();
     stack.pop();
-    op2 = stack.top();
+    second = stack.top();
     stack.pop();
-    this->push(*op1 + *op2);
+    this->push(*first + *second);
+}
+
+void VirtualMachine::mul(IOperand const *operand)
+{
+    if (stack.size() < 2)
+        throw Exception("Not enough operands in the stack");
+    
+    IOperand const *first;
+    IOperand const *second;
+
+    first = stack.top();
+    stack.pop();
+    second = stack.top();
+    stack.pop();
+    this->push(*first * *second);
 }
 
 void VirtualMachine::push(IOperand const *operand)
 {
     stack.push(operand);
+}
+
+void VirtualMachine::pop(IOperand const *operand)
+{
+    stack.pop();
+}
+
+void VirtualMachine::dump(IOperand const *o)
+{
+    for(auto &operand : stack) {
+      std::cout << "ok : " << (*operand)->toString() << "\n";
+    }
 }
