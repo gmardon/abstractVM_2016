@@ -5,13 +5,14 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 3:50:38 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 3:57:11 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
 VirtualMachine::VirtualMachine() 
 {
     this->handlers["exit"] = &VirtualMachine::exit;
+    this->handlers["add"] = &VirtualMachine::add;
 }
 
 void VirtualMachine::fromFile(std::string filename)
@@ -59,4 +60,11 @@ VirtualMachine::~VirtualMachine()
 void VirtualMachine::exit() 
 {
     std::exit(0);
+}
+
+void VirtualMachine::add()
+{
+    if (stack.size() < 2)
+        throw Exception("Not enough operands in the stack");
+    // todo continue this
 }

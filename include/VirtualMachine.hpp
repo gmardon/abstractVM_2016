@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:49:39 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 3:50:07 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 4:09:00 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _VIRTUAL_MACHINE_HPP_
 #define _VIRTUAL_MACHINE_HPP_
@@ -27,5 +27,6 @@ class VirtualMachine
         std::map<std::string, void (VirtualMachine::*)()> handlers;
 
         void exit();
+        void add();
 };
 #endif
