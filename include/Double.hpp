@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:23 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 5:15:55 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 11:11:05 AM 2017 guillaume.mardon@epitech.eu
 //
 
 #ifndef _DOUBLE_HPP_
@@ -17,15 +17,17 @@ class Double : public Operand<double>
 public:
     Double(const std::string & value);
     ~Double();
-
-    int getPrecision() const
-    {
-        return 15;
-    }
-
-    eOperandType getType() const
-    {
-        return DOUBLE;
-    }
 };
+
+template <>
+int Operand<double>::getPrecision() const
+{
+	return 15;
+}
+
+template <>
+eOperandType Operand<double>::getType() const
+{
+	return DOUBLE;
+}
 #endif

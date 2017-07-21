@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 2:57:18 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 5:15:24 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 11:12:19 AM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _FLOAT_HPP_
 #define _FLOAT_HPP_
@@ -16,14 +16,18 @@ class Float : public Operand<float>
 public:
     Float(const std::string & value);
     ~Float();
-    int getPrecision() const
-    {
-        return 7;
-    }
-    
-    eOperandType getType() const
-    {
-        return FLOAT;
-    }
 };
+
+template <>
+int Operand<float>::getPrecision() const
+{
+	return 7;
+}
+
+template <>
+eOperandType Operand<float>::getType() const
+{
+	return FLOAT;
+}
+
 #endif

@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 2:58:02 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 5:16:11 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 11:13:06 AM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _BIG_DECIMAL_HPP_
 #define _BIG_DECIMAL_HPP_
@@ -16,15 +16,17 @@ class BigDecimal : public Operand<int64_t>
 public:
     BigDecimal(const std::string & value);
     ~BigDecimal();
-
-     int getPrecision() const
-    {
-        return 200;
-    }
-
-    eOperandType getType() const
-    {
-        return BIGDECIMAL;
-    }
 };
+
+template <>
+int Operand<int64_t>::getPrecision() const
+{
+	return 200;
+}
+
+template <>
+eOperandType Operand<int64_t>::getType() const
+{
+	return BIGDECIMAL;
+}
 #endif

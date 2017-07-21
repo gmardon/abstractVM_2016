@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:36 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 10:02:48 AM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 11:20:58 AM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _INT8_HPP_
 #define _INT8_HPP_
@@ -16,15 +16,17 @@ class Int8 : public Operand<int8_t>
 public:
     Int8(const std::string & value);
     ~Int8();
-    
-    int getPrecision() const 
-    {
-        return 0;
-    }
-    
-    eOperandType getType() const
-    {
-        return INT8;
-    }
 };
+
+template <>
+int Operand<int8_t>::getPrecision() const
+{
+	return 0;
+}
+
+template <>
+eOperandType Operand<int8_t>::getType() const
+{
+	return INT8;
+}
 #endif

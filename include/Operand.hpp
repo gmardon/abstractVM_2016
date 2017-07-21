@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:06:16 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 9:51:04 AM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 11:11:57 AM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _OPERAND_HPP_
 #define _OPERAND_HPP_
@@ -33,4 +33,11 @@ class Operand : public IOperand
         std::string value;
         eOperandType type;
 };
+
+template class Operand<int8_t>;
+template class Operand<int16_t>;
+template class Operand<int32_t>;
+template class Operand<int64_t>;
+template class Operand<float>;
+template class Operand<double>;
 #endif
