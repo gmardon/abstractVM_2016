@@ -5,12 +5,18 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:52:20 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 1:52:24 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 7:19:06 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "Factory.hpp"
 
 Factory::Factory()
 {
+	operands_str["INT8"] = INT8;
+	operands_str["INT16"] = INT16;
+	operands_str["INT32"] = INT32;
+	operands_str["FLOAT"] = FLOAT;
+	operands_str["DOUBLE"] = DOUBLE;
+	operands_str["BIGDECIMAL"] = BIGDECIMAL;
 	operands[INT8] = &Factory::createInt8;
 	operands[INT16] = &Factory::createInt16;
 	operands[INT32] = &Factory::createInt32;
@@ -25,6 +31,14 @@ IOperand const* Factory::createOperand(eOperandType type, std::string const& val
 	f = operands.at(type);
 	return ((*this.*f)(value));
 }
+
+IOperand const* Factory::createOperand(std::string type, std::string const& value) const
+{
+	std::transform(type.begin(), type.end(), type.begin(), ::toupper);
+	if (operands_str.find(type) == operands_str.end())
+		throw Exception("Cannot resolve type '" + type + "' !");
+	return this->createOperand(operands_str.find(type)->second, value);
+} 
 
 IOperand const* Factory::createInt8( std::string const & value ) const
 {

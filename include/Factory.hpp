@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 2:57:28 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:04:32 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sat Jul 21 7:19:13 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _FACTORY_HPP_
 #define _FACTORY_HPP_
@@ -19,6 +19,9 @@
 #include "Float.hpp"
 #include "BigDecimal.hpp"
 #include "Double.hpp"
+#include "Exception.hpp"
+#include <string>
+#include <algorithm>
 
 class Factory
 {
@@ -27,6 +30,7 @@ public:
 	Factory(const Factory&);
 	const Factory& operator=(const Factory&);
 	IOperand const *createOperand(eOperandType type, std::string const & value) const;
+	IOperand const *createOperand(std::string type, std::string const & value) const;
 
 	~Factory();
 
@@ -39,5 +43,6 @@ private:
 	IOperand const *createBigDecimal(std::string const & value) const;
 	
 	std::map<eOperandType, IOperand const* (Factory::*)(std::string const & value) const> operands;
+	std::map<const std::string, eOperandType> operands_str;
 };
 #endif
