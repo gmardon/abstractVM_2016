@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:52:09 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 10:02:42 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 11:51:18 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "AbstractVM.hpp"
 #include "VirtualMachine.hpp"
@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
             vm->execute(vm->fromInput());
     } catch (Exception &ex) {
         printf("%s\n", ex.what());
+        return 84;
     }
-    
+    return 0;
 }
