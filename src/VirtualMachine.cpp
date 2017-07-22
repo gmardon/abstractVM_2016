@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 3:14:09 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 5:26:13 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -18,6 +18,10 @@ VirtualMachine::VirtualMachine()
     this->handlers["mul"] = &VirtualMachine::mul;
     this->handlers["dump"] = &VirtualMachine::dump;
     this->handlers["assert"] = &VirtualMachine::assert;
+    this->handlers["print"] = &VirtualMachine::print;
+    this->handlers["sub"] = &VirtualMachine::sub;
+    this->handlers["mod"] = &VirtualMachine::mod;
+    this->handlers["div"] = &VirtualMachine::div;
 }
 
 void VirtualMachine::fromFile(std::string filename)
@@ -36,6 +40,7 @@ void VirtualMachine::fromFile(std::string filename)
     {
         getline(file, instruction, '\n');
         if (instruction[0] == ';');
+        else if (instruction == "");
         else if ((pos = instruction.find(' ')) != instruction.npos)
         {
             value = instruction.substr(pos + 1, instruction.npos - 1);
@@ -90,6 +95,51 @@ void VirtualMachine::add(IOperand const *operand)
     this->push(*first + *second);
 }
 
+void VirtualMachine::sub(IOperand const *operand)
+{
+    if (stack.size() < 2)
+        throw Exception("Not enough operands in the stack");
+        
+    IOperand const *first;
+    IOperand const *second;
+
+    first = stack.top();
+    stack.pop();
+    second = stack.top();
+    stack.pop();
+    this->push(*first - *second);
+}
+
+void VirtualMachine::div(IOperand const *operand)
+{
+    if (stack.size() < 2)
+        throw Exception("Not enough operands in the stack");
+        
+    IOperand const *first;
+    IOperand const *second;
+
+    first = stack.top();
+    stack.pop();
+    second = stack.top();
+    stack.pop();
+    this->push(*first / *second);
+}
+
+void VirtualMachine::mod(IOperand const *operand)
+{
+    if (stack.size() < 2)
+        throw Exception("Not enough operands in the stack");
+        
+    IOperand const *first;
+    IOperand const *second;
+
+    first = stack.top();
+    stack.pop();
+    second = stack.top();
+    stack.pop();
+    this->push(*first % *second);
+}
+
 void VirtualMachine::mul(IOperand const *operand)
 {
     if (stack.size() < 2)
@@ -136,4 +186,13 @@ void VirtualMachine::assert(IOperand const *operand)
         throw Exception("Assert instruction with different value");
     if (target->getType() != operand->getType() - INT8)
         throw Exception("Assert instruction with different type");
+}
+
+void VirtualMachine::print(IOperand const *operand)
+{
+    if (stack.size() == 0)
+        throw Exception("Print instruction on empty stack");
+    if (stack.top()->getType() != INT8)
+        throw Exception("Print instruction on no 8-bit integer");
+    std::cout << static_cast<char>(std::stoi(stack.top()->toString())) << std::endl;
 }

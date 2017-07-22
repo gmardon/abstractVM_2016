@@ -5,13 +5,19 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:52:09 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 3:36:23 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 5:10:06 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "AbstractVM.hpp"
 #include "VirtualMachine.hpp"
 
 int main(int argc, char *argv[])
 {
-    VirtualMachine *vm = new VirtualMachine();
-    vm->fromFile("example.avm");
+    //try {
+        VirtualMachine *vm = new VirtualMachine();
+        if (argc == 2)
+            vm->fromFile(argv[1]);
+    //} catch (Exception &ex) {
+    //    printf("%s\n", ex.what());
+    //}
+    
 }

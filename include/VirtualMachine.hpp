@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:49:39 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 3:12:47 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 5:24:08 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _VIRTUAL_MACHINE_HPP_
 #define _VIRTUAL_MACHINE_HPP_
@@ -34,5 +34,9 @@ class VirtualMachine
         void mul(IOperand const*);
         void dump(IOperand const*);
         void assert(IOperand const*);
+        void print(IOperand const*);
+        void sub(IOperand const*);
+        void mod(IOperand const*);
+        void div(IOperand const*);
 };
 #endif
