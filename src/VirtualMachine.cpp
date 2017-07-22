@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 8:17:11 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 3:14:09 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -16,6 +16,8 @@ VirtualMachine::VirtualMachine()
     this->handlers["push"] = &VirtualMachine::push;
     this->handlers["pop"] = &VirtualMachine::pop;
     this->handlers["mul"] = &VirtualMachine::mul;
+    this->handlers["dump"] = &VirtualMachine::dump;
+    this->handlers["assert"] = &VirtualMachine::assert;
 }
 
 void VirtualMachine::fromFile(std::string filename)
@@ -115,7 +117,23 @@ void VirtualMachine::pop(IOperand const *operand)
 
 void VirtualMachine::dump(IOperand const *o)
 {
-    for(auto &operand : stack) {
-      std::cout << "ok : " << (*operand)->toString() << "\n";
+    if (stack.size() == 0)
+        throw Exception("Dump instruction on empty stack");
+    std::stack<const IOperand*> substack;
+    while (stack.size() != 0)
+    {
+        substack.push(stack.top());
+        std::cout << (substack.top()->toString()) << std::endl;
+        stack.pop();
     }
+    substack.swap(stack);
+}
+
+void VirtualMachine::assert(IOperand const *operand)
+{
+    const IOperand* target = stack.top();
+    if (target->toString() != operand->toString())
+        throw Exception("Assert instruction with different value");
+    if (target->getType() != operand->getType() - INT8)
+        throw Exception("Assert instruction with different type");
 }
