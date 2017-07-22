@@ -5,19 +5,21 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:52:09 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 5:10:06 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 10:02:42 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "AbstractVM.hpp"
 #include "VirtualMachine.hpp"
 
 int main(int argc, char *argv[])
 {
-    //try {
+    try {
         VirtualMachine *vm = new VirtualMachine();
         if (argc == 2)
-            vm->fromFile(argv[1]);
-    //} catch (Exception &ex) {
-    //    printf("%s\n", ex.what());
-    //}
+            vm->execute(vm->fromFile(argv[1]));
+        else
+            vm->execute(vm->fromInput());
+    } catch (Exception &ex) {
+        printf("%s\n", ex.what());
+    }
     
 }

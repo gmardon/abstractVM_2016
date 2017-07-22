@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:52:20 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 7:19:06 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 9:30:30 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "Factory.hpp"
 
@@ -36,7 +36,7 @@ IOperand const* Factory::createOperand(std::string type, std::string const& valu
 {
 	std::transform(type.begin(), type.end(), type.begin(), ::toupper);
 	if (operands_str.find(type) == operands_str.end())
-		throw Exception("Cannot resolve type '" + type + "' !");
+		throw Exception("Cannot resolve type !");
 	return this->createOperand(operands_str.find(type)->second, value);
 } 
 

@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 8:21:34 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 10:10:04 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -24,20 +24,19 @@ VirtualMachine::VirtualMachine()
     this->handlers["div"] = &VirtualMachine::div;
 }
 
-void VirtualMachine::fromFile(std::string filename)
+std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(std::string filename)
 {
     Factory *factory = new Factory(); 
     std::ifstream file;
     std::string instruction;
     std::string value;
     std::string type;
-    std::vector<std::pair<std::string, IOperand const *operand>> instructions;
+    std::vector<std::pair<std::string, const IOperand*>> instructions;
     size_t pos;
 
     file.open(filename.c_str());
     if (file.is_open() == false)
         throw Exception("File does not exist");
-
     while (file.good() == true && file.eof() != true && instruction != ";;")
     {
         getline(file, instruction, '\n');
@@ -52,24 +51,74 @@ void VirtualMachine::fromFile(std::string filename)
             pos = value.find('(');
             type = value.substr(0, pos);
             value = value.substr(pos + 1, value.find(')') - pos - 1);
-            instructions.push_front({instruction, factory->createOperand(type, value)});
+            if (this->handlers.find(instruction) == this->handlers.end())
+                throw Exception("Illegal instruction");
+            instructions.push_back({instruction, factory->createOperand(type, value)});
         }
         else
-            instructions.push_front({instruction, NULL});
+        {
+            if (this->handlers.find(instruction) == this->handlers.end())
+                throw Exception("Illegal instruction");
+            instructions.push_back({instruction, NULL});
+        }
     }
     file.close();
     delete factory;
-    if (instruction != "exit")
-        throw Exception("Last instruction should be exit");
+    return instructions;
+}
+
+std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromInput()
+{
+    Factory *factory = new Factory(); 
+    std::string instruction;
+    std::string value;
+    std::string type;
+    std::vector<std::pair<std::string, const IOperand*>> instructions;
+    size_t pos;
+
+    while (instruction != ";;")
+    {
+        getline(std::cin, instruction);
+        if (instruction[0] == ';');
+        else if (instruction == "");
+        else if ((pos = instruction.find(' ')) != instruction.npos)
+        {
+            value = instruction.substr(pos + 1, instruction.npos - 1);
+            instruction = instruction.substr(0, pos);
+            if (value.find('(') == value.npos || value.find(')') == value.npos)
+                throw Exception("Invalid value");
+            pos = value.find('(');
+            type = value.substr(0, pos);
+            value = value.substr(pos + 1, value.find(')') - pos - 1);
+            if (this->handlers.find(instruction) == this->handlers.end())
+                throw Exception("Illegal instruction");
+            instructions.push_back({instruction, factory->createOperand(type, value)});
+        }
+        else
+        {
+            if (this->handlers.find(instruction) == this->handlers.end())
+                throw Exception("Illegal instruction");
+            instructions.push_back({instruction, NULL});
+        }
+    }
+    delete factory;
+    return instructions;
+}
+
+void VirtualMachine::execute(std::vector<std::pair<std::string, const IOperand*>> instructions)
+{
+    for (auto const &instruction : instructions)
+        processInstruction((instruction).first, (instruction).second);
+
+    if (instructions.size() != 0)
+        if (instructions[instructions.size()].first != "exit")
+            throw Exception("Missing exit instruction at the end of program");
 }
 
 void VirtualMachine::processInstruction(std::string instruction, IOperand const *operand)
 {
-    if (this->handlers.find(instruction) == this->handlers.end())
-        throw Exception("Instruction '" + instruction  + "' doesn't exist");
     ((this)->*(this->handlers[instruction]))(operand);
 }
-
 
 VirtualMachine::~VirtualMachine()
 {
@@ -144,7 +193,7 @@ void VirtualMachine::mod(IOperand const *operand)
 void VirtualMachine::mul(IOperand const *operand)
 {
     if (stack.size() < 2)
-        throw Exception("Not enough operands in the stack");
+        throw Exception("Mul on stack with less than two values");
     
     IOperand const *first;
     IOperand const *second;
@@ -163,6 +212,8 @@ void VirtualMachine::push(IOperand const *operand)
 
 void VirtualMachine::pop(IOperand const *operand)
 {
+    if (stack.size() == 0)
+        throw Exception("Pop instruction on empty stack");
     stack.pop();
 }
 

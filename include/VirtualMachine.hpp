@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:49:39 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 5:24:08 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 10:02:30 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _VIRTUAL_MACHINE_HPP_
 #define _VIRTUAL_MACHINE_HPP_
@@ -19,8 +19,9 @@ class VirtualMachine
     public:
         VirtualMachine();
         ~VirtualMachine();
-        void fromFile(std::string file);
-        
+        std::vector<std::pair<std::string, const IOperand*>> fromFile(std::string file);
+        std::vector<std::pair<std::string, const IOperand*>> fromInput();
+        void execute(std::vector<std::pair<std::string, const IOperand*>> instructions);
     private:
         void processInstruction(std::string instruction, IOperand const *operand);
 
