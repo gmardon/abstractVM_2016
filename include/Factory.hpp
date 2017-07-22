@@ -5,12 +5,11 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 2:57:28 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sat Jul 21 7:19:13 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 8:15:19 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _FACTORY_HPP_
 #define _FACTORY_HPP_
-#include <string>
-#include <map>
+#include "AbstractVM.hpp"
 #include "IOperand.hpp"
 #include "Operand.hpp"
 #include "Int8.hpp"
@@ -20,8 +19,6 @@
 #include "BigDecimal.hpp"
 #include "Double.hpp"
 #include "Exception.hpp"
-#include <string>
-#include <algorithm>
 
 class Factory
 {

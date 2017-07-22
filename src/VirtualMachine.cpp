@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 5:26:13 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 8:21:34 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -26,10 +26,12 @@ VirtualMachine::VirtualMachine()
 
 void VirtualMachine::fromFile(std::string filename)
 {
+    Factory *factory = new Factory(); 
     std::ifstream file;
     std::string instruction;
     std::string value;
     std::string type;
+    std::vector<std::pair<std::string, IOperand const *operand>> instructions;
     size_t pos;
 
     file.open(filename.c_str());
@@ -50,14 +52,13 @@ void VirtualMachine::fromFile(std::string filename)
             pos = value.find('(');
             type = value.substr(0, pos);
             value = value.substr(pos + 1, value.find(')') - pos - 1);
-            Factory *factory = new Factory(); 
-            processInstruction(instruction, factory->createOperand(type, value));
-            delete factory;
+            instructions.push_front({instruction, factory->createOperand(type, value)});
         }
         else
-            processInstruction(instruction, NULL);
+            instructions.push_front({instruction, NULL});
     }
     file.close();
+    delete factory;
     if (instruction != "exit")
         throw Exception("Last instruction should be exit");
 }

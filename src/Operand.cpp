@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 4:22:58 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 5:23:55 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 8:13:02 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "Operand.hpp"
 #include "Factory.hpp"
@@ -46,7 +46,7 @@ template <typename T>
 IOperand const *Operand<T>::operator-(IOperand const &target) const
 {
 	if (this->getPrecision() < target.getPrecision()) 
-		return (target + *this);
+		return (target - *this);
 	T source_value = static_cast<T>(stod(this->value));
 	T target_value = static_cast<T>(stod(target.toString()));
 	// check overflow before anything
@@ -60,7 +60,7 @@ template <typename T>
 IOperand const *Operand<T>::operator*(IOperand const &target) const
 {
 	if (this->getPrecision() < target.getPrecision()) 
-		return (target + *this);
+		return (target * *this);
 	T source_value = static_cast<T>(stod(this->value));
 	T target_value = static_cast<T>(stod(target.toString()));
 	// check overflow before anything
@@ -74,7 +74,7 @@ template <typename T>
 IOperand const *Operand<T>::operator/(IOperand const &target) const
 {
 	if (this->getPrecision() < target.getPrecision()) 
-		return (target + *this);
+		return (target / *this);
 	T source_value = static_cast<T>(stod(this->value));
 	T target_value = static_cast<T>(stod(target.toString()));
 	// check overflow before anything
@@ -88,7 +88,10 @@ template <typename T>
 IOperand const *Operand<T>::operator%(IOperand const &target) const
 {
 	if (this->getPrecision() < target.getPrecision()) 
-		return (target + *this);
+		return (target % *this);
+
+	if (atof(target.toString().c_str()) == 0)
+    	throw Exception("Modulo by zero.");
 	if (type == FLOAT || target.getType() == FLOAT)
         throw Exception("Modulo with float.");
 	if (type == DOUBLE || target.getType() == DOUBLE)
