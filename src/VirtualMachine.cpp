@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Tue Jul 24 1:39:27 PM 2017 guillaume.mardon@epitech.eu
+// Last update Tue Jul 24 2:12:34 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -157,7 +157,7 @@ void VirtualMachine::sub(IOperand const *operand)
     stack.pop();
     second = stack.top();
     stack.pop();
-    this->push(*first - *second);
+    this->push(*second - *first);
 }
 
 void VirtualMachine::div(IOperand const *operand)
