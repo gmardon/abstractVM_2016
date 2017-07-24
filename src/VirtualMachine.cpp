@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 10:10:04 PM 2017 guillaume.mardon@epitech.eu
+// Last update Sun Jul 22 10:43:52 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -52,7 +52,7 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
             type = value.substr(0, pos);
             value = value.substr(pos + 1, value.find(')') - pos - 1);
             if (this->handlers.find(instruction) == this->handlers.end())
-                throw Exception("Illegal instruction");
+                throw Exception("Illegal instruction"); 
             instructions.push_back({instruction, factory->createOperand(type, value)});
         }
         else
