@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 10:43:52 PM 2017 guillaume.mardon@epitech.eu
+// Last update Tue Jul 24 1:39:27 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -179,7 +179,6 @@ void VirtualMachine::mod(IOperand const *operand)
 {
     if (stack.size() < 2)
         throw Exception("Not enough operands in the stack");
-        
     IOperand const *first;
     IOperand const *second;
 
@@ -194,7 +193,6 @@ void VirtualMachine::mul(IOperand const *operand)
 {
     if (stack.size() < 2)
         throw Exception("Mul on stack with less than two values");
-    
     IOperand const *first;
     IOperand const *second;
 
@@ -221,11 +219,10 @@ void VirtualMachine::dump(IOperand const *o)
 {
     if (stack.size() == 0)
         throw Exception("Dump instruction on empty stack");
-    std::stack<const IOperand*> substack;
+    std::stack<const IOperand*> substack(stack);
     while (stack.size() != 0)
     {
-        substack.push(stack.top());
-        std::cout << (substack.top()->toString()) << std::endl;
+        std::cout << (stack.top()->toString()) << std::endl;
         stack.pop();
     }
     substack.swap(stack);
