@@ -5,11 +5,11 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Tue Jul 24 2:12:34 PM 2017 guillaume.mardon@epitech.eu
+// Last update Mon Jul 24 17:47:38 2017 nathan.bonnet@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
-VirtualMachine::VirtualMachine() 
+VirtualMachine::VirtualMachine()
 {
     this->handlers["exit"] = &VirtualMachine::exit;
     this->handlers["add"] = &VirtualMachine::add;
@@ -26,7 +26,7 @@ VirtualMachine::VirtualMachine()
 
 std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(std::string filename)
 {
-    Factory *factory = new Factory(); 
+    Factory *factory = new Factory();
     std::ifstream file;
     std::string instruction;
     std::string value;
@@ -52,7 +52,7 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
             type = value.substr(0, pos);
             value = value.substr(pos + 1, value.find(')') - pos - 1);
             if (this->handlers.find(instruction) == this->handlers.end())
-                throw Exception("Illegal instruction"); 
+                throw Exception("Illegal instruction");
             instructions.push_back({instruction, factory->createOperand(type, value)});
         }
         else
@@ -67,42 +67,22 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
     return instructions;
 }
 
-std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromInput()
+void VirtualMachine::fromInput()
 {
-    Factory *factory = new Factory(); 
-    std::string instruction;
-    std::string value;
-    std::string type;
-    std::vector<std::pair<std::string, const IOperand*>> instructions;
-    size_t pos;
+  std::ofstream outfile (".Input.txt");
 
-    while (instruction != ";;")
+  for (std::string line; std::getline(std::cin, line);)
+   {
+    if (line == ";;")
     {
-        getline(std::cin, instruction);
-        if (instruction[0] == ';');
-        else if (instruction == "");
-        else if ((pos = instruction.find(' ')) != instruction.npos)
-        {
-            value = instruction.substr(pos + 1, instruction.npos - 1);
-            instruction = instruction.substr(0, pos);
-            if (value.find('(') == value.npos || value.find(')') == value.npos)
-                throw Exception("Invalid value");
-            pos = value.find('(');
-            type = value.substr(0, pos);
-            value = value.substr(pos + 1, value.find(')') - pos - 1);
-            if (this->handlers.find(instruction) == this->handlers.end())
-                throw Exception("Illegal instruction");
-            instructions.push_back({instruction, factory->createOperand(type, value)});
-        }
-        else
-        {
-            if (this->handlers.find(instruction) == this->handlers.end())
-                throw Exception("Illegal instruction");
-            instructions.push_back({instruction, NULL});
-        }
+      outfile.close();
+      execute(fromFile(".Input.txt"));
+      break;
     }
-    delete factory;
-    return instructions;
+    else
+      outfile << line << std::endl;
+}
+  outfile.close();
 }
 
 void VirtualMachine::execute(std::vector<std::pair<std::string, const IOperand*>> instructions)
@@ -122,10 +102,10 @@ void VirtualMachine::processInstruction(std::string instruction, IOperand const 
 
 VirtualMachine::~VirtualMachine()
 {
-    
+
 }
 
-void VirtualMachine::exit(IOperand const *operand) 
+void VirtualMachine::exit(IOperand const *operand)
 {
     std::exit(0);
 }
@@ -134,7 +114,7 @@ void VirtualMachine::add(IOperand const *operand)
 {
     if (stack.size() < 2)
         throw Exception("Not enough operands in the stack");
-        
+
     IOperand const *first;
     IOperand const *second;
 
@@ -149,7 +129,7 @@ void VirtualMachine::sub(IOperand const *operand)
 {
     if (stack.size() < 2)
         throw Exception("Not enough operands in the stack");
-        
+
     IOperand const *first;
     IOperand const *second;
 
@@ -164,7 +144,7 @@ void VirtualMachine::div(IOperand const *operand)
 {
     if (stack.size() < 2)
         throw Exception("Not enough operands in the stack");
-        
+
     IOperand const *first;
     IOperand const *second;
 
