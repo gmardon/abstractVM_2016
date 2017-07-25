@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 11:11:05 AM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 11:27:36 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -25,6 +25,7 @@ VirtualMachine::VirtualMachine()
     this->handlers["clear"] = &VirtualMachine::clear;
     this->handlers["store"] = &VirtualMachine::store;
     this->handlers["load"] = &VirtualMachine::load;
+    this->handlers["dup"] = &VirtualMachine::dup;
 }
 
 std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(std::string filename)
@@ -36,7 +37,7 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
     std::string type;
     std::string instruction;
     std::vector<std::pair<std::string, const IOperand*>> instructions;
-    std::regex regex("^(push|pop|dump|clear|dup|swap|assert|add|sub|mul|div|mod|load|store|print|exit)[\\s]*((int8|int16|int32|float|double|bigdecimal)\\(([−]?[0-9]+[.]?[0-9]*)\\))?");
+    std::regex regex("^(push|pop|dump|clear|dup|swap|assert|add|sub|mul|div|mod|load|store|print|exit)[\\s]*((int8|int16|int32|float|double|bigdecimal)\\(([−]?[\\d]+[.]?[\\d]*)\\))?");
     std::smatch matches;
     size_t pos;
 
@@ -50,7 +51,10 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
         if (regex_search(line, matches, regex))
         {           
             instruction = matches[1];
-            if (this->handlers.find(instruction) == this->handlers.end() || matches[2].str() == "")
+            if ((instruction == "load" || instruction == "store" || instruction == "assert" || instruction == "push") && matches[2].str() == "")
+                throw Exception("Illegal instruction");
+            // TODO CHECK IF TYPE IS DECIMAL 
+            if (this->handlers.find(instruction) == this->handlers.end())
                 throw Exception("Illegal instruction");
             if (matches[2].str() != "") // instruction with operand
                 instructions.push_back({instruction, factory->createOperand(matches[3].str(), matches[4].str())});
@@ -251,4 +255,10 @@ void VirtualMachine::load(IOperand const *operand)
         stack.push(registers[reg]);
     else
         throw Exception("Load an register empty cell");
+}
+
+void VirtualMachine::dup(IOperand const *operand) 
+{ 
+    Factory *factory = new Factory();
+    stack.push(factory->createOperand(stack.top()->getType(), stack.top()->toString()));
 }
