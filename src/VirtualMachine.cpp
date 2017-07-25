@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 11:44:11 AM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 11:50:05 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -38,7 +38,7 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
     std::string type;
     std::string instruction;
     std::vector<std::pair<std::string, const IOperand*>> instructions;
-    std::regex regex("^(push|pop|dump|clear|dup|swap|assert|add|sub|mul|div|mod|load|store|print|exit)[\\s]*((int8|int16|int32|float|double|bigdecimal)\\(([−]?[\\d]+[.]?[\\d]*)\\))?");
+    std::regex regex("^(push|pop|dump|clear|dup|swap|assert|add|sub|mul|div|mod|load|store|print|exit)[\\s]*((int8|int16|int32|float|double|bigdecimal)\\(([-]?[\\d]+[.]?[\\d]*)\\))?");
     std::smatch matches;
     size_t pos;
 
