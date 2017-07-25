@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Tue Jul 24 2:12:34 PM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 9:42:42 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -32,9 +32,9 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
     std::string line;
     std::string value;
     std::string type;
+    std::string instruction;
     std::vector<std::pair<std::string, const IOperand*>> instructions;
-    std::regex regex("^(push[\\s\\t]*(int8\\(([−]?[0-9]+)\\)|int16\\(([−]?[0-9]+)\\)|float\\(([−]?[0-9]+[.]?[0-9]*)\\)|bigdecimal\\(([−]?[0-9]+[.]?[0-9]*)\\)|int32\\(([−]?[0-9]+)\\)|double\\(([−]?[0-9]+[.]?[0-9]*)\\))|pop|dump|clear|dup|swap|assert[\\s\\t]*(int8\\(([−]?[0-9]+)\\)|int16\\(([−]?[0-9]+)\\)|float\\(([−]?[0-9]+[.]?[0-9]*)\\)|bigdecimal\\(([−]?[0-9]+[.]?[0-9]*)\\)|int32\\(([−]?[0-9]+)\\)|double\\(([−]?[0-9]+[.]?[0-9]*)\\))|add|sub|mul|div|mod|load[\\s\\t]*(int8\\(([−]?[0-9]+)\\)|int16\\(([−]?[0-9]+)\\)|float\\(([−]?[0-9]+[.]?[0-9]*)\\)|bigdecimal\\(([−]?[0-9]+[.]?[0-9]*)\\)|int32\\(([−]?[0-9]+)\\)|double\\(([−]?[0-9]+[.]?[0-9]*)\\))|(store)[\\s\\t]*(int8\\(([−]?[0-9]+)\\)|int16\\(([−]?[0-9]+)\\)|float\\(([−]?[0-9]+[.]?[0-9]*)\\)|bigdecimal\\(([−]?[0-9]+[.]?[0-9]*)\\)|int32\\(([−]?[0-9]+)\\)|double\\(([−]?[0-9]+[.]?[0-9]*)\\))|print|exit)[\\s\\St]*$");
-    std::smatch matches;
+    std::regex regex("^(push|pop|dump|clear|dup|swap|assert|add|sub|mul|div|mod|load|store|print|exit)[\\s\\t]*(int8|int16|int32|float|double|bigdecimal)?\\(?([−]?[0-9]+[.]?[0-9]*)?\\)?$");    std::smatch matches;
     size_t pos;
 
     file.open(filename.c_str());
@@ -45,33 +45,14 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
         getline(file, line, '\n');
         if (regex_search(line, matches, regex))
         {
-            for (int i = 0; i < matches.size(); i++)
-            {
-                printf("(%i) => %s\n", i, matches[i]);
-            }
-            //printf("match: %i\n", matches.size());
-        }
-        /*if (instruction[0] == ';');
-        else if (instruction == "");
-        else if ((pos = instruction.find(' ')) != instruction.npos)
-        {
-            value = instruction.substr(pos + 1, instruction.npos - 1);
-            instruction = instruction.substr(0, pos);
-            if (value.find('(') == value.npos || value.find(')') == value.npos)
-                throw Exception("Invalid value");
-            pos = value.find('(');
-            type = value.substr(0, pos);
-            value = value.substr(pos + 1, value.find(')') - pos - 1);
+            instruction = matches[1];
             if (this->handlers.find(instruction) == this->handlers.end())
                 throw Exception("Illegal instruction");
-            instructions.push_back({instruction, factory->createOperand(type, value)});
+            if (matches[2] != "") // instruction with operand
+                instructions.push_back({instruction, factory->createOperand(matches[2], matches[3])});
+            else
+                 instructions.push_back({instruction, NULL});
         }
-        else
-        {
-            if (this->handlers.find(instruction) == this->handlers.end())
-                throw Exception("Illegal instruction");
-            instructions.push_back({instruction, NULL});
-        }*/
     }
     file.close();
     delete factory;
@@ -80,20 +61,20 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
 
 void VirtualMachine::fromInput()
 {
-  std::ofstream outfile (".Input.txt");
-
-  for (std::string line; std::getline(std::cin, line);)
-   {
-    if (line == ";;")
+    std::string file = ".input.txt";
+    std::ofstream outfile (file);
+    for (std::string line; std::getline(std::cin, line);)
     {
-      outfile.close();
-      execute(fromFile(".Input.txt"));
-      break;
+        if (line == ";;")
+        {
+        outfile.close();
+        execute(fromFile(file));
+        break;
+        }
+        else
+        outfile << line << std::endl;
     }
-    else
-      outfile << line << std::endl;
-}
-  outfile.close();
+    outfile.close();
 }
 
 void VirtualMachine::execute(std::vector<std::pair<std::string, const IOperand*>> instructions)
@@ -237,4 +218,10 @@ void VirtualMachine::print(IOperand const *operand)
     if (stack.top()->getType() != INT8)
         throw Exception("Print instruction on no 8-bit integer");
     std::cout << static_cast<char>(std::stoi(stack.top()->toString())) << std::endl;
+}
+
+ 
+void VirtualMachine::clear(IOperand const *operand) 
+{ 
+    stack = std::stack<IOperand const *>(); 
 }
