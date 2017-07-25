@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 4:22:58 PM 2017 guillaume.mardon@epitech.eu
-// Last update Tue Jul 24 2:16:52 PM 2017 guillaume.mardon@epitech.eu
+// Last update Tue Jul 24 3:41:30 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "Operand.hpp"
 #include "Factory.hpp"
@@ -35,6 +35,7 @@ IOperand const *Operand<T>::operator+(IOperand const &target) const
 	Factory *factory = new Factory();
 	T source_value = static_cast<T>(stod(this->value));
 	T target_value = static_cast<T>(stod(target.toString()));
+	//printf("=> %i + %i\n", source_value, target_value/*, source_value + target_value*/);
 	// check overflow before anything
 	if (this->getPrecision() > target.getPrecision()) 
 		operand = factory->createOperand(this->getType(), std::to_string(target_value + source_value));

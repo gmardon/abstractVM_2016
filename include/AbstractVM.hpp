@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 2:57:48 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 8:19:54 PM 2017 guillaume.mardon@epitech.eu
+// Last update Tue Jul 24 5:35:39 PM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _ABSTRACT_VM_HPP_
 #define _ABSTRACT_VM_HPP_
@@ -19,5 +19,25 @@
 #include <vector>
 #include <utility>
 #include <functional>
+#include <regex>
 
+// trim from start (in place)
+static inline void ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int ch) {
+        return !std::isspace(ch);
+    }));
+}
+
+// trim from end (in place)
+static inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](int ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+
+// trim from both ends (in place)
+static inline void trim(std::string &s) {
+    ltrim(s);
+    rtrim(s);
+}
 #endif

@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Tue Jul 24 2:12:34 PM 2017 guillaume.mardon@epitech.eu
+// Last update Tue Jul 24 5:44:21 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -22,25 +22,36 @@ VirtualMachine::VirtualMachine()
     this->handlers["sub"] = &VirtualMachine::sub;
     this->handlers["mod"] = &VirtualMachine::mod;
     this->handlers["div"] = &VirtualMachine::div;
+    this->handlers["clear"] = &VirtualMachine::clear;
 }
 
 std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(std::string filename)
 {
     Factory *factory = new Factory(); 
     std::ifstream file;
-    std::string instruction;
+    std::string line;
     std::string value;
     std::string type;
     std::vector<std::pair<std::string, const IOperand*>> instructions;
+    std::regex regex("^(push[\\s\\t]*(int8\\(([−]?[0-9]+)\\)|int16\\(([−]?[0-9]+)\\)|float\\(([−]?[0-9]+[.]?[0-9]*)\\)|bigdecimal\\(([−]?[0-9]+[.]?[0-9]*)\\)|int32\\(([−]?[0-9]+)\\)|double\\(([−]?[0-9]+[.]?[0-9]*)\\))|pop|dump|clear|dup|swap|assert[\\s\\t]*(int8\\(([−]?[0-9]+)\\)|int16\\(([−]?[0-9]+)\\)|float\\(([−]?[0-9]+[.]?[0-9]*)\\)|bigdecimal\\(([−]?[0-9]+[.]?[0-9]*)\\)|int32\\(([−]?[0-9]+)\\)|double\\(([−]?[0-9]+[.]?[0-9]*)\\))|add|sub|mul|div|mod|load[\\s\\t]*(int8\\(([−]?[0-9]+)\\)|int16\\(([−]?[0-9]+)\\)|float\\(([−]?[0-9]+[.]?[0-9]*)\\)|bigdecimal\\(([−]?[0-9]+[.]?[0-9]*)\\)|int32\\(([−]?[0-9]+)\\)|double\\(([−]?[0-9]+[.]?[0-9]*)\\))|(store)[\\s\\t]*(int8\\(([−]?[0-9]+)\\)|int16\\(([−]?[0-9]+)\\)|float\\(([−]?[0-9]+[.]?[0-9]*)\\)|bigdecimal\\(([−]?[0-9]+[.]?[0-9]*)\\)|int32\\(([−]?[0-9]+)\\)|double\\(([−]?[0-9]+[.]?[0-9]*)\\))|print|exit)[\\s\\St]*$");
+    std::smatch matches;
     size_t pos;
 
     file.open(filename.c_str());
     if (file.is_open() == false)
         throw Exception("File does not exist");
-    while (file.good() == true && file.eof() != true && instruction != ";;")
+    while (file.good() == true && file.eof() != true && line != ";;")
     {
-        getline(file, instruction, '\n');
-        if (instruction[0] == ';');
+        getline(file, line, '\n');
+        if (regex_search(line, matches, regex))
+        {
+            for (int i = 0; i < matches.size(); i++)
+            {
+                printf("(%i) => %s\n", i, matches[i]);
+            }
+            //printf("match: %i\n", matches.size());
+        }
+        /*if (instruction[0] == ';');
         else if (instruction == "");
         else if ((pos = instruction.find(' ')) != instruction.npos)
         {
@@ -60,7 +71,7 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
             if (this->handlers.find(instruction) == this->handlers.end())
                 throw Exception("Illegal instruction");
             instructions.push_back({instruction, NULL});
-        }
+        }*/
     }
     file.close();
     delete factory;
@@ -142,6 +153,8 @@ void VirtualMachine::add(IOperand const *operand)
     stack.pop();
     second = stack.top();
     stack.pop();
+    printf("add '%s' + '%s' = '%s'\n", first->toString().c_str(), second->toString().c_str(), (*first + *second)->toString().c_str());
+    
     this->push(*first + *second);
 }
 
@@ -244,4 +257,9 @@ void VirtualMachine::print(IOperand const *operand)
     if (stack.top()->getType() != INT8)
         throw Exception("Print instruction on no 8-bit integer");
     std::cout << static_cast<char>(std::stoi(stack.top()->toString())) << std::endl;
+}
+
+void VirtualMachine::clear(IOperand const *operand)
+{
+    stack = std::stack<IOperand const *>();
 }
