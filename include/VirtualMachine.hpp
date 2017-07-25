@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:49:39 PM 2017 guillaume.mardon@epitech.eu
-// Last update Sun Jul 22 10:02:30 PM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 10:06:07 AM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _VIRTUAL_MACHINE_HPP_
 #define _VIRTUAL_MACHINE_HPP_
@@ -26,6 +26,7 @@ class VirtualMachine
         void processInstruction(std::string instruction, IOperand const *operand);
 
         std::stack<IOperand const *> stack;
+        std::map<int, IOperand const *> registers;
         std::map<std::string, void (VirtualMachine::*)(IOperand const *)> handlers;
 
         void exit(IOperand const*);
@@ -39,6 +40,8 @@ class VirtualMachine
         void sub(IOperand const*);
         void mod(IOperand const*);
         void div(IOperand const*);
+        void load(IOperand const *);
+        void store(IOperand const *);
         void clear(IOperand const *);
 };
 #endif

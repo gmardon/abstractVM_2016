@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 9:53:46 AM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 10:25:48 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -23,6 +23,8 @@ VirtualMachine::VirtualMachine()
     this->handlers["mod"] = &VirtualMachine::mod;
     this->handlers["div"] = &VirtualMachine::div;
     this->handlers["clear"] = &VirtualMachine::clear;
+    this->handlers["store"] = &VirtualMachine::store;
+    this->handlers["load"] = &VirtualMachine::load;
 }
 
 std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(std::string filename)
@@ -119,7 +121,6 @@ void VirtualMachine::add(IOperand const *operand)
     stack.pop();
     second = stack.top();
     stack.pop();
-    printf("add '%s' + '%s' = '%s'\n", first->toString().c_str(), second->toString().c_str(), (*first + *second)->toString().c_str());
     
     this->push(*first + *second);
 }
@@ -165,7 +166,7 @@ void VirtualMachine::mod(IOperand const *operand)
     stack.pop();
     second = stack.top();
     stack.pop();
-    this->push(*first % *second);
+    this->push(*second % *first);
 }
 
 void VirtualMachine::mul(IOperand const *operand)
@@ -225,8 +226,29 @@ void VirtualMachine::print(IOperand const *operand)
     std::cout << static_cast<char>(std::stoi(stack.top()->toString())) << std::endl;
 }
 
- 
 void VirtualMachine::clear(IOperand const *operand) 
 { 
     stack = std::stack<IOperand const *>(); 
+}
+
+void VirtualMachine::store(IOperand const *operand) 
+{ 
+    int reg = atoi(operand->toString().c_str());
+    if (reg >= 0 && reg <= 15)
+    {
+        registers[reg] = stack.top();
+        stack.pop();
+    }
+    else
+        throw Exception("Register must be between 0 and 15 !");
+    stack = std::stack<IOperand const *>(); 
+}
+
+void VirtualMachine::load(IOperand const *operand) 
+{ 
+    int reg = atoi(operand->toString().c_str());
+    if (registers[reg] != NULL)
+        stack.push(registers[reg]);
+    else
+        throw Exception("Load an register empty cell");
 }

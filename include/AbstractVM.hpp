@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 2:57:48 PM 2017 guillaume.mardon@epitech.eu
-// Last update Tue Jul 24 5:35:39 PM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 10:04:53 AM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _ABSTRACT_VM_HPP_
 #define _ABSTRACT_VM_HPP_
@@ -15,11 +15,12 @@
 #include <list>
 #include <fstream>
 #include <algorithm>
-#include <string>
 #include <vector>
 #include <utility>
 #include <functional>
 #include <regex>
+#include <string>
+#include <exception>
 
 // trim from start (in place)
 static inline void ltrim(std::string &s) {

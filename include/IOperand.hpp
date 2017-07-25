@@ -5,13 +5,11 @@
 // Login   <bettin_j@epitech.net>
 // 
 // Started on  Sat Feb  9 09:32:15 2013 jordan bettin
-// Last update Sat Jul 21 1:43:47 PM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 10:04:44 AM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _IOPERAND_HPP_
 #define	_IOPERAND_HPP_
-#include <string>
-#include <iostream>
-#include <exception>
+#include "AbstractVM.hpp"
 
 typedef enum eOperandType
 {
