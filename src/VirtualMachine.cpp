@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 11:50:05 AM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 1:39:39 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -262,10 +262,15 @@ void VirtualMachine::store(IOperand const *operand)
 void VirtualMachine::load(IOperand const *operand) 
 { 
     int reg = atoi(operand->toString().c_str());
-    if (registers[reg] != NULL)
-        stack.push(registers[reg]);
+    if (reg >= 0 && reg <= 15)
+    {
+        if (registers[reg] != NULL)
+            stack.push(registers[reg]);
+        else
+            throw Exception("Load an register empty cell");
+    }
     else
-        throw Exception("Load an register empty cell");
+        throw Exception("Register must be between 0 and 15 !");
 }
 
 void VirtualMachine::dup(IOperand const *operand) 
