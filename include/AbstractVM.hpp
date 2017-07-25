@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 2:57:48 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 10:04:53 AM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 11:45:50 AM 2017 guillaume.mardon@epitech.eu
 //
 #ifndef _ABSTRACT_VM_HPP_
 #define _ABSTRACT_VM_HPP_
@@ -40,5 +40,23 @@ static inline void rtrim(std::string &s) {
 static inline void trim(std::string &s) {
     ltrim(s);
     rtrim(s);
+}
+
+static inline bool equals_ignore_case(const std::string& a, const std::string& b)
+{
+    unsigned int sz = a.size();
+    if (b.size() != sz)
+        return false;
+    for (unsigned int i = 0; i < sz; ++i)
+        if (tolower(a[i]) != tolower(b[i]))
+            return false;
+    return true;
+}
+
+static inline std::string toLower(std::string str)
+{
+    std::string newstr(str);
+    std::transform(newstr.begin(), newstr.end(), newstr.begin(), ::tolower);
+    return newstr;
 }
 #endif

@@ -5,9 +5,8 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 3:05:30 PM 2017 guillaume.mardon@epitech.eu
-// Last update Fri Jul 20 3:05:30 PM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 11:44:40 AM 2017 guillaume.mardon@epitech.eu
 //
-
 #ifndef	_EXCEPTION_HPP_
 #define	_EXCEPTION_HPP_
 #include <iostream>

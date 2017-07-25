@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 11:31:25 AM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 11:44:11 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -52,13 +52,23 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
         if (regex_search(line, matches, regex))
         {           
             instruction = matches[1];
-            if ((instruction == "load" || instruction == "store" || instruction == "assert" || instruction == "push") && matches[2].str() == "")
+            if ((equals_ignore_case(instruction, "load") 
+                || equals_ignore_case(instruction, "store") 
+                || equals_ignore_case(instruction, "assert") 
+                || equals_ignore_case(instruction, "push")) 
+                    && matches[2].str() == "") // if there are no operand when necessary
                 throw Exception("Illegal instruction");
-            // TODO CHECK IF TYPE IS DECIMAL 
-            if (this->handlers.find(instruction) == this->handlers.end())
+            if (this->handlers.find(toLower(instruction)) == this->handlers.end())
                 throw Exception("Illegal instruction");
-            if (matches[2].str() != "") // instruction with operand
-                instructions.push_back({instruction, factory->createOperand(matches[3].str(), matches[4].str())});
+            if (matches[2].str() != "") 
+            {
+                if ((matches[4].str().find('.') != std::string::npos) && // if decimal value on non-decimal type
+                    ((equals_ignore_case(matches[3].str(), "int8")) 
+                    || equals_ignore_case(matches[3].str(), "int16") 
+                    || equals_ignore_case(matches[3].str(), "int32")))
+                throw Exception("Illegal instruction");
+                instructions.push_back({instruction, factory->createOperand(toLower(matches[3].str()), toLower(matches[4].str()))});
+            }
             else
                  instructions.push_back({instruction, NULL});
         }
@@ -84,7 +94,7 @@ void VirtualMachine::fromInput()
             break;
         }
         else
-        outfile << line << std::endl;
+            outfile << line << std::endl;
     }
     outfile.close();
 }
