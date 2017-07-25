@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:52:09 PM 2017 guillaume.mardon@epitech.eu
-// Last update Tue Jul 24 9:26:41 AM 2017 guillaume.mardon@epitech.eu
+// Last update Mon Jul 24 17:47:48 2017 nathan.bonnet@epitech.eu
 //
 #include "AbstractVM.hpp"
 #include "VirtualMachine.hpp"
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
         if (argc == 2)
             vm->execute(vm->fromFile(argv[1]));
         else
-            vm->execute(vm->fromInput());
+            vm->fromInput();
     } catch (Exception &ex) {
         std::cout << ex.what() << std::endl;
         return 84;
