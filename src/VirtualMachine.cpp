@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 10:25:48 AM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 11:11:05 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -36,7 +36,7 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
     std::string type;
     std::string instruction;
     std::vector<std::pair<std::string, const IOperand*>> instructions;
-    std::regex regex("^(push|pop|dump|clear|dup|swap|assert|add|sub|mul|div|mod|load|store|print|exit)[\\s\\t]*(int8|int16|int32|float|double|bigdecimal)?\\(?([−]?[0-9]+[.]?[0-9]*)?\\)?");    
+    std::regex regex("^(push|pop|dump|clear|dup|swap|assert|add|sub|mul|div|mod|load|store|print|exit)[\\s]*((int8|int16|int32|float|double|bigdecimal)\\(([−]?[0-9]+[.]?[0-9]*)\\))?");
     std::smatch matches;
     size_t pos;
 
@@ -48,12 +48,12 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
         getline(file, line, '\n');
         trim(line);
         if (regex_search(line, matches, regex))
-        {
+        {           
             instruction = matches[1];
-            if (this->handlers.find(instruction) == this->handlers.end())
+            if (this->handlers.find(instruction) == this->handlers.end() || matches[2].str() == "")
                 throw Exception("Illegal instruction");
-            if (matches[2] != "") // instruction with operand
-                instructions.push_back({instruction, factory->createOperand(matches[2], matches[3])});
+            if (matches[2].str() != "") // instruction with operand
+                instructions.push_back({instruction, factory->createOperand(matches[3].str(), matches[4].str())});
             else
                  instructions.push_back({instruction, NULL});
         }
@@ -74,9 +74,9 @@ void VirtualMachine::fromInput()
     {
         if (line == ";;")
         {
-        outfile.close();
-        execute(fromFile(file));
-        break;
+            outfile.close();
+            execute(fromFile(file));
+            break;
         }
         else
         outfile << line << std::endl;
