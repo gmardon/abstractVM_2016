@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 9:42:42 AM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 9:51:22 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -34,7 +34,8 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
     std::string type;
     std::string instruction;
     std::vector<std::pair<std::string, const IOperand*>> instructions;
-    std::regex regex("^(push|pop|dump|clear|dup|swap|assert|add|sub|mul|div|mod|load|store|print|exit)[\\s\\t]*(int8|int16|int32|float|double|bigdecimal)?\\(?([−]?[0-9]+[.]?[0-9]*)?\\)?$");    std::smatch matches;
+    std::regex regex("^(push|pop|dump|clear|dup|swap|assert|add|sub|mul|div|mod|load|store|print|exit)[\\s\\t]*(int8|int16|int32|float|double|bigdecimal)?\\(?([−]?[0-9]+[.]?[0-9]*)?\\)?");    
+    std::smatch matches;
     size_t pos;
 
     file.open(filename.c_str());
@@ -43,6 +44,7 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
     while (file.good() == true && file.eof() != true && line != ";;")
     {
         getline(file, line, '\n');
+        trim(line);
         if (regex_search(line, matches, regex))
         {
             instruction = matches[1];
@@ -53,6 +55,9 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
             else
                  instructions.push_back({instruction, NULL});
         }
+        else if (line[0] == ';');
+        else
+            throw Exception("Illegal instruction");
     }
     file.close();
     delete factory;
@@ -146,7 +151,7 @@ void VirtualMachine::div(IOperand const *operand)
     stack.pop();
     second = stack.top();
     stack.pop();
-    this->push(*first / *second);
+    this->push(*second / *first);
 }
 
 void VirtualMachine::mod(IOperand const *operand)
