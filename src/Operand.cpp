@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 4:22:58 PM 2017 guillaume.mardon@epitech.eu
-// Last update Tue Jul 24 3:41:30 PM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 1:51:56 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "Operand.hpp"
 #include "Factory.hpp"
@@ -33,14 +33,16 @@ IOperand const *Operand<T>::operator+(IOperand const &target) const
 {
 	const IOperand *operand;
 	Factory *factory = new Factory();
-	T source_value = static_cast<T>(stod(this->value));
-	T target_value = static_cast<T>(stod(target.toString()));
-	//printf("=> %i + %i\n", source_value, target_value/*, source_value + target_value*/);
+	double source_value = static_cast<double>(stod(this->value));
+	double target_value = static_cast<double>(stod(target.toString()));
+	std::string result = std::to_string(source_value + target_value);
 	// check overflow before anything
+	if (this->getPrecision() + target.getPrecision() == 0)
+		result = result.substr(0, result.find(".", 0));
 	if (this->getPrecision() > target.getPrecision()) 
-		operand = factory->createOperand(this->getType(), std::to_string(target_value + source_value));
+		operand = factory->createOperand(this->getType(), result);
 	else
-		operand = factory->createOperand(target.getType(), std::to_string(target_value + source_value));
+		operand = factory->createOperand(target.getType(), result);
 	delete factory;
 	return operand;
 }
@@ -50,13 +52,16 @@ IOperand const *Operand<T>::operator-(IOperand const &target) const
 {
 	const IOperand *operand;
 	Factory *factory = new Factory();
-	T source_value = static_cast<T>(stod(this->value));
-	T target_value = static_cast<T>(stod(target.toString()));
+	double source_value = static_cast<double>(stod(this->value));
+	double target_value = static_cast<double>(stod(target.toString()));
+	std::string result = std::to_string(source_value - target_value);
+	if (this->getPrecision() + target.getPrecision() == 0)
+		result = result.substr(0, result.find(".", 0));
 	// check overflow before anything
 	if (this->getPrecision() > target.getPrecision()) 
-		operand = factory->createOperand(this->getType(), std::to_string(source_value - target_value));
+		operand = factory->createOperand(this->getType(), result);
 	else
-		operand = factory->createOperand(target.getType(), std::to_string(source_value - target_value));
+		operand = factory->createOperand(target.getType(), result);
 	delete factory;
 	return operand;
 }
@@ -66,13 +71,16 @@ IOperand const *Operand<T>::operator*(IOperand const &target) const
 {
 	const IOperand *operand;
 	Factory *factory = new Factory();
-	T source_value = static_cast<T>(stod(this->value));
-	T target_value = static_cast<T>(stod(target.toString()));
+	double source_value = static_cast<double>(stod(this->value));
+	double target_value = static_cast<double>(stod(target.toString()));
+	std::string result = std::to_string(source_value * target_value);
+	if (this->getPrecision() + target.getPrecision() == 0)
+		result = result.substr(0, result.find(".", 0));
 	// check overflow before anything
 	if (this->getPrecision() > target.getPrecision()) 
-		operand = factory->createOperand(this->getType(), std::to_string(source_value * target_value));
+		operand = factory->createOperand(this->getType(), result);
 	else
-		operand = factory->createOperand(target.getType(), std::to_string(source_value * target_value));
+		operand = factory->createOperand(target.getType(), result);
 	delete factory;
 	return operand;
 }
@@ -84,13 +92,16 @@ IOperand const *Operand<T>::operator/(IOperand const &target) const
     	throw Exception("Division by zero !");
 	const IOperand *operand;
 	Factory *factory = new Factory();
-	T source_value = static_cast<T>(stod(this->value));
-	T target_value = static_cast<T>(stod(target.toString()));
+	double source_value = static_cast<double>(stod(this->value));
+	double target_value = static_cast<double>(stod(target.toString()));
+	std::string result = std::to_string(source_value / target_value);
+	if (this->getPrecision() + target.getPrecision() == 0)
+		result = result.substr(0, result.find(".", 0));
 	// check overflow before anything
 	if (this->getPrecision() > target.getPrecision()) 
-		operand = factory->createOperand(this->getType(), std::to_string(source_value / target_value));
+		operand = factory->createOperand(this->getType(), result);
 	else
-		operand = factory->createOperand(target.getType(), std::to_string(source_value / target_value));
+		operand = factory->createOperand(target.getType(), result);
 	delete factory;
 	return operand;
 }
@@ -106,13 +117,16 @@ IOperand const *Operand<T>::operator%(IOperand const &target) const
         throw Exception("Modulo with double !");
 	const IOperand *operand;
 	Factory *factory = new Factory();
-	T source_value = static_cast<T>(stod(this->value));
-	T target_value = static_cast<T>(stod(target.toString()));
+	uint64_t source_value = static_cast<int>(stod(this->value));
+	uint64_t target_value = static_cast<int>(stod(target.toString()));
+	std::string result = std::to_string(source_value % target_value);
+	if (this->getPrecision() + target.getPrecision() == 0)
+		result = result.substr(0, result.find(".", 0));
 	// check overflow before anything
 	if (this->getPrecision() > target.getPrecision()) 
-		operand = factory->createOperand(this->getType(), std::to_string((int)source_value % (int) target_value));
+		operand = factory->createOperand(this->getType(), result);
 	else
-		operand = factory->createOperand(target.getType(), std::to_string((int)source_value % (int) target_value));
+		operand = factory->createOperand(target.getType(), result);
 	delete factory;
 	return operand;
 }
