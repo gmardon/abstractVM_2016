@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 11:27:36 AM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 11:31:25 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -26,6 +26,7 @@ VirtualMachine::VirtualMachine()
     this->handlers["store"] = &VirtualMachine::store;
     this->handlers["load"] = &VirtualMachine::load;
     this->handlers["dup"] = &VirtualMachine::dup;
+    this->handlers["swap"] = &VirtualMachine::swap;
 }
 
 std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(std::string filename)
@@ -261,4 +262,20 @@ void VirtualMachine::dup(IOperand const *operand)
 { 
     Factory *factory = new Factory();
     stack.push(factory->createOperand(stack.top()->getType(), stack.top()->toString()));
+    delete factory;
+}
+
+void VirtualMachine::swap(IOperand const *operand) 
+{ 
+    if (stack.size() < 2)
+        throw Exception("Swap on stack with less than two values");
+    IOperand const *first;
+    IOperand const *second;
+
+    first = stack.top();
+    stack.pop();
+    second = stack.top();
+    stack.pop();
+    this->push(first);
+    this->push(second);
 }
