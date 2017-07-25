@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 9:51:22 AM 2017 guillaume.mardon@epitech.eu
+// Last update Wed Jul 25 9:53:46 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -55,7 +55,7 @@ std::vector<std::pair<std::string, const IOperand*>> VirtualMachine::fromFile(st
             else
                  instructions.push_back({instruction, NULL});
         }
-        else if (line[0] == ';');
+        else if (line[0] == ';' || line == "");
         else
             throw Exception("Illegal instruction");
     }
