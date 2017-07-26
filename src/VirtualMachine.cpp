@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Thu Jul 26 11:29:35 AM 2017 guillaume.mardon@epitech.eu
+// Last update Thu Jul 26 2:49:20 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -213,7 +213,7 @@ void VirtualMachine::pop(IOperand const *operand)
 void VirtualMachine::dump(IOperand const *o)
 {
     if (stack.size() == 0)
-        throw Exception("Dump instruction on empty stack");
+        return;
     std::stack<const IOperand*> substack(stack);
     while (stack.size() != 0)
     {
