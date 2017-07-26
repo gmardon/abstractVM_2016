@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:46:44 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 1:47:24 PM 2017 guillaume.mardon@epitech.eu
+// Last update Thu Jul 26 11:29:35 AM 2017 guillaume.mardon@epitech.eu
 //
 #include "VirtualMachine.hpp"
 
@@ -248,6 +248,8 @@ void VirtualMachine::clear(IOperand const *operand)
 
 void VirtualMachine::store(IOperand const *operand) 
 { 
+    if (stack.size() == 0)
+        throw Exception("Store instruction on empty stack");
     int reg = atoi(operand->toString().c_str());
     if (reg >= 0 && reg <= 15)
     {
@@ -256,7 +258,6 @@ void VirtualMachine::store(IOperand const *operand)
     }
     else
         throw Exception("Register must be between 0 and 15 !");
-    stack = std::stack<IOperand const *>(); 
 }
 
 void VirtualMachine::load(IOperand const *operand) 
