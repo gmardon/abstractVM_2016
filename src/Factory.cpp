@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Sat Jul 21 1:52:20 PM 2017 guillaume.mardon@epitech.eu
-// Last update Tue Jul 24 3:41:26 PM 2017 guillaume.mardon@epitech.eu
+// Last update Thu Jul 26 3:35:15 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "Factory.hpp"
 
@@ -27,7 +27,6 @@ Factory::Factory()
 
 IOperand const* Factory::createOperand(eOperandType type, std::string const& value) const
 {
-	//printf("new operand (%s)\n", value.c_str());
 	IOperand const* (Factory::*f)(std::string const & value) const;
 	f = operands.at(type);
 	return ((*this.*f)(value));

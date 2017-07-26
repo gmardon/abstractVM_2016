@@ -5,7 +5,7 @@
 // Login   <guillaume.mardon@epitech.eu>
 //
 // Started on  Fri Jul 20 4:22:58 PM 2017 guillaume.mardon@epitech.eu
-// Last update Wed Jul 25 1:51:56 PM 2017 guillaume.mardon@epitech.eu
+// Last update Thu Jul 26 3:32:54 PM 2017 guillaume.mardon@epitech.eu
 //
 #include "Operand.hpp"
 #include "Factory.hpp"
@@ -35,8 +35,11 @@ IOperand const *Operand<T>::operator+(IOperand const &target) const
 	Factory *factory = new Factory();
 	double source_value = static_cast<double>(stod(this->value));
 	double target_value = static_cast<double>(stod(target.toString()));
+	if ((target_value > 0) && (source_value > std::numeric_limits<T>::max() + target_value))
+    	throw Exception("Overflow or underflow !");
+  	if ((target_value < 0) && (source_value < -std::numeric_limits<T>::max() + target_value - 1))
+    	throw Exception("Overflow or underflow !");
 	std::string result = std::to_string(source_value + target_value);
-	// check overflow before anything
 	if (this->getPrecision() + target.getPrecision() == 0)
 		result = result.substr(0, result.find(".", 0));
 	if (this->getPrecision() > target.getPrecision()) 
@@ -54,10 +57,13 @@ IOperand const *Operand<T>::operator-(IOperand const &target) const
 	Factory *factory = new Factory();
 	double source_value = static_cast<double>(stod(this->value));
 	double target_value = static_cast<double>(stod(target.toString()));
+	if ((target_value > 0) && (source_value > std::numeric_limits<T>::max() - target_value))
+    	throw Exception("Overflow or underflow !");
+  	if ((target_value < 0) && (source_value < -std::numeric_limits<T>::max() - target_value - 1))
+    	throw Exception("Overflow or underflow !");
 	std::string result = std::to_string(source_value - target_value);
 	if (this->getPrecision() + target.getPrecision() == 0)
 		result = result.substr(0, result.find(".", 0));
-	// check overflow before anything
 	if (this->getPrecision() > target.getPrecision()) 
 		operand = factory->createOperand(this->getType(), result);
 	else
@@ -73,10 +79,13 @@ IOperand const *Operand<T>::operator*(IOperand const &target) const
 	Factory *factory = new Factory();
 	double source_value = static_cast<double>(stod(this->value));
 	double target_value = static_cast<double>(stod(target.toString()));
+	if ((target_value > 0) && (source_value > std::numeric_limits<T>::max() * target_value))
+    	throw Exception("Overflow or underflow !");
+  	if ((target_value < 0) && (source_value < -std::numeric_limits<T>::max() * target_value - 1))
+    	throw Exception("Overflow or underflow !");
 	std::string result = std::to_string(source_value * target_value);
 	if (this->getPrecision() + target.getPrecision() == 0)
 		result = result.substr(0, result.find(".", 0));
-	// check overflow before anything
 	if (this->getPrecision() > target.getPrecision()) 
 		operand = factory->createOperand(this->getType(), result);
 	else
@@ -94,10 +103,13 @@ IOperand const *Operand<T>::operator/(IOperand const &target) const
 	Factory *factory = new Factory();
 	double source_value = static_cast<double>(stod(this->value));
 	double target_value = static_cast<double>(stod(target.toString()));
+	if ((target_value > 0) && (source_value > std::numeric_limits<T>::max() * target_value))
+    	throw Exception("Overflow or underflow !");
+  	if ((target_value < 0) && (source_value < -std::numeric_limits<T>::max() * target_value - 1))
+    	throw Exception("Overflow or underflow !");
 	std::string result = std::to_string(source_value / target_value);
 	if (this->getPrecision() + target.getPrecision() == 0)
 		result = result.substr(0, result.find(".", 0));
-	// check overflow before anything
 	if (this->getPrecision() > target.getPrecision()) 
 		operand = factory->createOperand(this->getType(), result);
 	else
@@ -119,10 +131,13 @@ IOperand const *Operand<T>::operator%(IOperand const &target) const
 	Factory *factory = new Factory();
 	uint64_t source_value = static_cast<int>(stod(this->value));
 	uint64_t target_value = static_cast<int>(stod(target.toString()));
+	if ((target_value > 0) && (source_value > std::numeric_limits<T>::max() - target_value))
+    	throw Exception("Overflow or underflow !");
+  	if ((target_value < 0) && (source_value < -std::numeric_limits<T>::max() - target_value - 1))
+    	throw Exception("Overflow or underflow !");
 	std::string result = std::to_string(source_value % target_value);
 	if (this->getPrecision() + target.getPrecision() == 0)
 		result = result.substr(0, result.find(".", 0));
-	// check overflow before anything
 	if (this->getPrecision() > target.getPrecision()) 
 		operand = factory->createOperand(this->getType(), result);
 	else
